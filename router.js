@@ -1,15 +1,14 @@
 var requestHandler = require("./requestHandler");
 
-function route(handler, pathname) {
+function route(handler, pathname, response, postData) {
 
    console.log("About to route a request for " + pathname);
    if (typeof(handler[pathname]) === 'function') {
-      console.log("About to call: " + handler[pathname]);
-      return handler[pathname]();
+      handler[pathname](response, postData);
    }
    else {
       console.log("No request handler found for " + pathname);
-      return "404 Not Found";
+      //"404 Not Found";
    }
 }
 
