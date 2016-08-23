@@ -3,23 +3,11 @@ var url = require("url");
 
 function start(route, handler) {
    function onrequest(request, response) {
-      var postData = "";
       var pathname = url.parse(request.url).pathname;
 
       if (pathname != "/favicon.ico") {
         console.log("Request for " + pathname + " received");
-        
-        request.setEncoding("utf8");
-
-        request.addListener("data", function(postDataChunk) {
-            postData += postDataChunk;
-            console.log("Received postdatachunk: '" + postDataChunk + "'.");
-
-        })
-
-        request.addListener("end", function() {
-            route(handler, pathname, response, postData);
-        })
+        route(handler, pathname, response, request);
       }
       else {
           response.end();
